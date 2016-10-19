@@ -67,6 +67,23 @@ def student_add():
                            last=last,
                            github=github)
 
+
+@app.route("/project-add", methods=["POST"])
+def project_add():
+    """Add a project"""
+
+    title = request.form.get("title")
+    description = request.form.get("description")
+    max_grade = request.form.get("max_grade")
+
+    hackbright.make_new_project(title, description, max_grade)
+
+    return render_template("project_add.html",
+                           title=title,
+                           description=description,
+                           max_grade=max_grade)
+
+
 if __name__ == "__main__":
     hackbright.connect_to_db(app)
     app.run(debug=True)
