@@ -49,7 +49,12 @@ def get_project():
 def get_student_form():
     """Show forms for searching/adding for a student."""
 
-    return render_template("student_search.html")
+    students = hackbright.get_all_students()
+    projects = hackbright.get_all_projects()
+
+    return render_template("student_search.html",
+                            students=students,
+                            projects=projects)
 
 
 @app.route("/student-add", methods=["POST"])
@@ -82,7 +87,20 @@ def project_add():
                            title=title,
                            description=description,
                            max_grade=max_grade)
+@app.route("/grading", methods=["POST"])
+def give_grade():
+    """Assign grade or update grade to student"""
 
+    github = request.form.get("github")
+    title = request.form.get("title")
+    grade = request.form.get("grade")
+
+    hackbright.assign_grade(github, title, grade)
+
+    return render_template("graded.html",
+                            github=github,
+                            title=title,
+                            grade=grade)
 
 if __name__ == "__main__":
     hackbright.connect_to_db(app)

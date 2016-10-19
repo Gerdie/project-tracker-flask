@@ -43,11 +43,31 @@
     </form>
 
 <h1>Get Project Information</h1>
-<form action="/project">
+    <form action="/project">
         <label>Project Title
             <input type="text" name="title">
         </label>
         <input type="submit" value="Get Project Info">
+    </form>
+
+<h1>Assign Grades</h1>
+    <form action="/grading" method="POST">
+        Project Title
+        <select name="title">
+            {% for project in projects %}
+            <option value={{ project[0] }}>{{ project[0] }}</option>
+            {% endfor %}
+        </select>
+
+        Student Github
+        <select name="github">
+            {% for student in students %}
+            <option value={{ student[0] }}>{{ student[0] }}</option>
+            {% endfor %}
+        </select>
+        Grade
+        <input type="number" name="grade">
+        <input type="submit" value="Assign Grades">
     </form>
 
 </body>
